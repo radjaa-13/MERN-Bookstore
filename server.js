@@ -15,6 +15,12 @@ app.use(express.json())
 // Routes
 app.use("/users", require("./routes/users"))
 
+app.use("/books", require("./routes/books"))
+
+app.use("/category", require("./routes/category"))
+
+
+
 
 app.use(cors())
 

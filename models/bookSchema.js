@@ -42,7 +42,7 @@ isOnSale: {
 },
 
 discountPercent: {
-     type : Boolean,
+     type : String,
     default : false,
 
 },
