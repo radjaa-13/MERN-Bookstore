@@ -18,16 +18,15 @@ function Header() {
 
     React.useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(ref.current.scrollTop > 10);
+            setIsScrolled(window.scrollY > 10);
         };
-        ref.current.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
     return (
-        <div ref={ref} className="h-88 md:h-64 overflow-y-scroll">
-            <p className="w-10 h-[500px]"></p>
-            <nav className={`fixed top-0 left-0 bg-indigo-500 w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 ${isScrolled ? "bg-white/80 shadow-md text-gray-700 backdrop-blur-lg py-3 md:py-4" : "py-4 md:py-6"}`}>
+       
+            <nav className={`fixed top-0 left-0 bg-white w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 ${isScrolled ? "bg-white/80 shadow-md text-gray-700 backdrop-blur-lg py-3 md:py-4" : "py-4 md:py-6"}`}>
 
                 {/* Logo */}
                 <a href="https://prebuiltui.com"
@@ -39,14 +38,12 @@ function Header() {
                 {/* Desktop Nav */}
                 <div className="hidden md:flex items-center gap-4 lg:gap-8">
                     {navLinks.map((link, i) => (
-                        <a key={i} href={link.path} className={`group flex flex-col gap-0.5 ${isScrolled ? "text-gray-700" : "text-white"}`}>
+                        <a key={i} href={link.path} className={`group flex flex-col gap-0.5 ${isScrolled ? "text-gray-700" : "text-gray-700"}`}>
                             {link.name}
                             <div className={`${isScrolled ? "bg-gray-700" : "bg-white"} h-0.5 w-0 group-hover:w-full transition-all duration-300`} />
                         </a>
                     ))}
-                    <button className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer ${isScrolled ? 'text-black' : 'text-white'} transition-all`}>
-                        New Launch
-                    </button>
+                    
                 </div>
 
                 {/* Desktop Right */}
@@ -55,8 +52,12 @@ function Header() {
                         <circle cx="11" cy="11" r="8" />
                         <line x1="21" y1="21" x2="16.65" y2="16.65" />
                     </svg>
-                    <button className={`px-8 py-2.5 rounded-full ml-4 transition-all duration-500 ${isScrolled ? "text-white bg-black" : "bg-white text-black"}`}>
+                    <button className={`  ml-4   ${isScrolled ? "text-white bg-[#F86D72]" : "text-white bg-[#F86D72]"}`}>
                         Login
+                    </button>
+
+                    <button className={`  ml-4  ${isScrolled ? "text-white bg-[#F86D72]" : "text-white bg-[#F86D72]"}`}>
+                        Signup
                     </button>
                 </div>
 
@@ -71,12 +72,12 @@ function Header() {
 
                 {/* Mobile Menu */}
                 <div className={`fixed top-0 left-0 w-full h-screen bg-white text-base flex flex-col md:hidden items-center justify-center gap-6 font-medium text-gray-800 transition-all duration-500 ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}>
-                    <button className="absolute top-4 right-4" onClick={() => setIsMenuOpen(false)}>
+                    <a className="absolute top-4 right-4" onClick={() => setIsMenuOpen(false)}>
                         <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                             <line x1="18" y1="6" x2="6" y2="18" />
                             <line x1="6" y1="6" x2="18" y2="18" />
                         </svg>
-                    </button>
+                    </a>
 
                     {navLinks.map((link, i) => (
                         <a key={i} href={link.path} onClick={() => setIsMenuOpen(false)}>
@@ -84,16 +85,19 @@ function Header() {
                         </a>
                     ))}
 
-                    <button className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all">
-                        New Launch
+                    
+
+                    <button>  
+                        Login
                     </button>
 
-                    <button className="bg-black text-white px-8 py-2.5 rounded-full transition-all duration-500">
-                        Login
+
+                    <button className={`  ml-0 md:ml-4  ${isScrolled ? "text-white bg-[#F86D72]" : "bg-[#F86D72] text-white"}`}>
+                        Signup
                     </button>
                 </div>
             </nav>
-        </div>
+       
     );
 
 

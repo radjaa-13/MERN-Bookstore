@@ -5,8 +5,24 @@
 
 body {
   margin: 0;
+   font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+button{
+  background: #F86D72;
+  color: white;
+  border-radius: 17px;
+  padding: 10px;
+  width: 100px;
+  transition: 0.3s all;
+}
+
+
+button:hover{
+  background:#dd6165
+}
 #root {
   width: 1126px;
   max-width: 100%;
