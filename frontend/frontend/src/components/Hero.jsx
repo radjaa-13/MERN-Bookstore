@@ -1,8 +1,11 @@
-import React from 'react'
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
- 
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+
+
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -19,28 +22,34 @@ const responsive = {
     items: 1,
     slidesToSlide: 1 // optional, default to 1.
   }
-};
 
-function Hero({ deviceType="desktop" }) {
   return (
-   <div>
-   <Carousel
-   responsive={responsive}
-        infinite={true}
-        autoPlay={true}
-        autoPlaySpeed={2000}
-        showDots={true}
+    <section id="home" className="w-full pt-16">
+      <Swiper
+        modules={[Autoplay, Pagination, Navigation]}
+        slidesPerView={1}
+        autoplay={{ delay: 3000, disableOnInteraction: false }}
+        loop={true}
+        pagination={{ clickable: true }}
+        navigation={true}
+        className="w-full"
       >
-        <div style={{ height: "300px", background: "red" }}>Slide 1</div>
-        <div style={{ height: "300px", background: "blue" }}>Slide 2</div>
-        <div style={{ height: "300px", background: "green" }}>Slide 3</div>
-   
-</Carousel>
-</div>
-
-
-  )
+        {images.map((img, idx) => (
+          <SwiperSlide key={idx}>
+            <div className="relative w-full h-[60vh] min-h-[450px] overflow-hidden bg-black">
+              <img
+                src={img}
+                alt={`slide-${idx + 1}`}
+                className="w-full h-full object-cover object-center"
+                loading={idx === 0 ? "eager" : "lazy"}
+              />
+              <div className="absolute inset-0 bg-black/40" />
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </section>
+  );
 }
 
-export default Hero
-
+export default Hero;
