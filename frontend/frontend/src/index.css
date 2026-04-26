@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
@@ -45,3 +46,4 @@ button:hover {
     padding: 0 1.5rem;
   }
 }
+

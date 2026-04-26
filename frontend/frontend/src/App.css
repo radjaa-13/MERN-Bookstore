@@ -94,6 +94,13 @@
     text-align: center;
   }
 }
+/* Réduire la taille des flèches sur mobile */
+@media (max-width: 768px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    transform: scale(0.6);
+  }
+}
 
 #docs {
   border-right: 1px solid var(--border);
