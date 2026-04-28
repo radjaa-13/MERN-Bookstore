@@ -34,6 +34,22 @@ button:hover {
   background: #dd6165;
   transform: translateY(-1px);
 }
+h3{
+  font-size: 28px;
+  
+  position: relative;
+  font-weight: bold;
+
+}
+h3::before{
+position: absolute;
+content: "";
+bottom: -2px;
+left: 0;
+background-color: #F86D72;
+height: 5px;
+width: 140px;
+}
 
 .container {
   max-width: 1280px;

@@ -7,8 +7,11 @@ function Home() {
   return (
     <div >
       <Hero/>
+       <div className='p-10 lg:px-52'>
+
       <Highlights/>
       <FeaturedProducts/>
+      </div>
       </div>
   )
 }
