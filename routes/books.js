@@ -25,7 +25,7 @@ const upload = multer({ storage: storage })
 
 router.post("/createbook", upload.single('coverImage'), async(req, res)=>{
     try {
-const {title,author, description,price,stock,isfeautred,
+const {title,author, description,price,stock,isfeatred,
         category, discountPercent, isOnSale}= req.body
 
         if(!title || !author  || !description|| !price || !stock  )
@@ -38,7 +38,7 @@ const {title,author, description,price,stock,isfeautred,
              description,
              price,
              stock,
-             isfeautred,
+             isfeatred,
              category,
              discountPercent,
              isOnSale,
@@ -68,30 +68,17 @@ const {title,author, description,price,stock,isfeautred,
          
     })
    
-     router.get("/:id", async(req,res)=>{
-        try {
-        const book = await book.findById(req.params.id)
-        if(!book){
-            return res.status(404).json({message :"book is not founds"})
-        }
-
-        return res.json(Book)
-        } catch (error) {
-         res.status(500).json({error: error.message})
-
-   } 
-
-    })
+     /** */
      router.put("/updatebook/:id" , async(req,res)=>{
         try {
             
 
-            const books = await book.findByIdAndUpdate(req.params.id,
+            const Book = await book.findByIdAndUpdate(req.params.id,
                req.body,
                {new : true}
             ).populate("category", "name")
 
-            if(!book){
+            if(!Book){
             return res.status(404).json({message :"book is not founds"})
         }
         res.json({message: "book updated successfully "})
@@ -106,8 +93,8 @@ const {title,author, description,price,stock,isfeautred,
      router.delete("/deletebook/:id", async(req,res)=>{
         try {
 
-          const books = await book.findByIdAndDelete(req.params.id)
-        if(!book){
+          const Book = await book.findByIdAndDelete(req.params.id)
+        if(!Book){
             return res.status(404).json({message :"book is not founds"})
         }
          res.json({message: "book deleted successfully "})
@@ -118,6 +105,22 @@ const {title,author, description,price,stock,isfeautred,
         }
         
      })
+
+
+     router.get("/:id", async(req,res)=>{
+        try {
+        const Book = await book.findById(req.params.id)
+        if(!Book){
+            return res.status(404).json({message :"book is not founds"})
+        }
+
+        return res.json(Book)
+        } catch (error) {
+         res.status(500).json({error: error.message})
+
+   } 
+
+    })
    
 
     module.exports =router;

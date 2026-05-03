@@ -29,7 +29,7 @@ stock: {
 
 },
 
-isfeautred: {
+isfeatred: {
      type : Boolean,
     default : false,
 

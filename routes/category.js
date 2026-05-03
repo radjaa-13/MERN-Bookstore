@@ -29,5 +29,19 @@ const {name}= req.body
         res.status(500).json({error: error.message});
     }
     })
+
+    router.get("/getCategories", async  (req,res)=> {
+
+    try {
+      const categories = await category.find()
+
+      return res.json(categories)
+
+    } catch (error) {
+
+     res.status(500).json({ error: error.message })
+  
+    }
+})
     
     module.exports =router;

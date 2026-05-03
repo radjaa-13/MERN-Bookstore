@@ -3,12 +3,16 @@ import { Link } from 'react-router-dom';
 
 function Allbooks() {
   const [bookList, setBookList] = useState([]);
-  const [message, setMessage] = useState(""); // optionnel
+  const [message, setMessage] = useState(""); 
 
   useEffect(() => {
     fetch("http://localhost:5000/books/getBooks")
       .then(res => res.json())
-      .then(data => setBookList(data))
+      .then(data => {
+      console.log("DATA =", data);
+
+      setBookList(data.books || data);
+    })
       .catch(err => console.error("Error fetching books:", err));
   }, []);
 

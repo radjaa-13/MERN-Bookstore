@@ -21,7 +21,7 @@ function AdminLayout() {
      </header>
 
 
-     {/*sidebar*/}
+     {/* sidebar */}
       <div className='relative mx-auto flex'>
 
         
@@ -74,6 +74,7 @@ function AdminLayout() {
 
      <main className='w-full md:ml-64 p-4 md:p-6'>
                   <div className="mx-auto max-w-6xl">
+                     
                   <Outlet />
                  </div>
             </main>

@@ -27,7 +27,7 @@ const hideHeader = /^\/admin(\/|$)/.test(location.pathname)
 
  <Route path="/admin" element={<AdminLayout />}>
   <Route path="add-book" element={<AddBook />} /> 
-  <Route index path="books" element={<AllBooks />} />  
+  <Route index element="books" element={<AllBooks />} />  
 
 
 
