@@ -2,28 +2,23 @@ const express=require("express")
 const router=express.Router()
 const book = require("../models/bookSchema")
 const multer  = require('multer')
+const auth = require("../auth/middleware")
 
 
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '/mesimages/images')
-  },
+   
+ cb(null, './images')  },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    const filename = Date.now() + '-' + file.fieldname
     cb(null, filename)
   }
 })
 
-const upload = multer({ storage: storage })
+const upload = multer({ storage: storage,limits: { fileSize: 5 * 1024 * 1024 } })
 
-
-
-
-
-
-
-router.post("/createbook", upload.single('coverImage'), async(req, res)=>{
+router.post("/createbook", auth("admin"), upload.single('coverImage'), async(req, res)=>{
     try {
 const {title,author, description,price,stock,isfeatred,
         category, discountPercent, isOnSale}= req.body
@@ -43,15 +38,11 @@ const {title,author, description,price,stock,isfeatred,
              discountPercent,
              isOnSale,
              coverImage : req.file?.filename , 
+             
 
         })
         await newbook.save()
         return res.status(201).json({message:"book created with  successfully", book :newbook});
-        
-
-
-
-
         
     } catch (error) {
         res.status(500).json({error: error.message});

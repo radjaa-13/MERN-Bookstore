@@ -1,4 +1,6 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
+
 
 function Header() {
  
@@ -13,6 +15,7 @@ function Header() {
 
     const [isScrolled, setIsScrolled] = React.useState(false);
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    const navigate = useNavigate()
 
     React.useEffect(() => {
         const handleScroll = () => {
@@ -48,11 +51,11 @@ function Header() {
                         <circle cx="11" cy="11" r="8" />
                         <line x1="21" y1="21" x2="16.65" y2="16.65" />
                     </svg>
-                    <button className={`ml-4  ${isScrolled ? "text-white bg-[#F86D72]" : "bg-[#F86D72] text-white"}`}>
+                    <button  onClick={()=> navigate("/login")} className={`ml-4  ${isScrolled ? "text-white bg-[#F86D72]" : "bg-[#F86D72] text-white"}`}>
                         Login
                     </button>
 
-                     <button className={`  ml-0 md:ml-4   ${isScrolled ? "text-white bg-[#F86D72]" : "bg-[#F86D72] text-white"}`}>
+                     <button onClick={()=> navigate("/signup")}  className={`  ml-0 md:ml-4   ${isScrolled ? "text-white bg-[#F86D72]" : "bg-[#F86D72] text-white"}`}>
                         Signup
                     </button>
                 </div>

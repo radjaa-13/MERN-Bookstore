@@ -7,6 +7,8 @@ import {Routes, Route, useLocation } from 'react-router-dom';
 import AddBook from './components/admin/AddBook';
 import AdminLayout from './components/admin/AdminLayout';
 import AllBooks from './components/admin/AllBooks';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 
 
@@ -24,6 +26,8 @@ const hideHeader = /^\/admin(\/|$)/.test(location.pathname)
  <Routes>
 
  <Route path="/" element = {<Home/>} />
+ <Route path="/login" element = {  <Login/>}/>
+ <Route path="/signup" element = {  <Signup/>}/>
 
  <Route path="/admin" element={<AdminLayout />}>
   <Route path="add-book" element={<AddBook />} /> 

@@ -31,13 +31,21 @@ const hashedPassword= await bcrypt.hash(password, 10)
     const newUser= new User({
         email,
         password:hashedPassword,
-        name
+        name,
+        role: "user",
     })
 
     await newUser.save()
     /*console.log("New user created:", newUser);*/
-     let token = jwt.sign({email,id :newUser._id},process.env.SECRET_KEY,{expiresIn:"1w"}) 
-         res.status(201).json({message:"user registered successfully",user : newUser, token})
+     let token = jwt.sign({email,id :newUser._id,role: newUser.role},process.env.SECRET_KEY,{expiresIn:"1w"}) 
+     res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+
+   })
+         res.status(201).json({message:"user registered successfully",user : newUser, token, role: newUser.role})
 
 
 
@@ -51,8 +59,23 @@ router.post("/signin",async(req,res)=>{
     }
     let user = await User.findOne({email})
     if (user && bcrypt.compare(password, user.password)){
-     let token = jwt.sign({email,id :user._id},process.env.SECRET_KEY,{expiresIn:"1w"}) 
-        return  res.status(201).json({message:"user signin successfully",user : user, token})
+    const role = (user.role || "user").trim()
+
+
+     let token = jwt.sign({email,id :user._id,role},process.env.SECRET_KEY,{expiresIn:"1w"}) 
+     res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+
+   })
+   /**route pour  admin */
+       const redirectPath  = role === "admin" ? "/admin" : "/"
+
+
+
+        return  res.status(201).json({message:"user signin successfully",user : user, token,role, redirect : redirectPath})
 
     } 
     else 

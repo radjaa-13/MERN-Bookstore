@@ -100,7 +100,7 @@ fd.append("discountPercent", String(form.discountPercent));
 
     try{
      setSubmitting(true);
-    const res = await fetch("http://localhost:5000/books/createbook ", {
+    const res = await fetch("http://localhost:5000/books/createbook", {
   method: "POST",
         
   body: fd,
@@ -266,7 +266,7 @@ fd.append("discountPercent", String(form.discountPercent));
               <label className="inline-flex items-center gap-2">
               <input
                 type="checkbox"
-                name="discount Percent"
+                name="discountPercent"
                 checked={form.isfeatred}
                 onChange={onChange}
                 className="h-4 w-4 rounded border-slate-300"
