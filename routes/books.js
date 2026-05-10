@@ -2,8 +2,7 @@ const express=require("express")
 const router=express.Router()
 const book = require("../models/bookSchema")
 const multer  = require('multer')
-const auth = require("../auth/middleware")
-
+const { auth } = require("../auth/middleware");
 
 
 const storage = multer.diskStorage({

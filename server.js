@@ -9,13 +9,14 @@ const connectDB = require("./config/db")
 // Connexion à la base de données
 connectDB(); 
 // pour parser le body JSON
-app.use(cors())
-app.use(express.json ({
-  origin: "http://localhost:3000", //  React app's URL
+app.use(cors({
+  origin: "http://localhost:5173", // Your React app's URL
   credentials: true, // Allow credentials
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }))
+
+app.use(express.json ())
 
 
 // Routes
@@ -24,6 +25,7 @@ app.use("/users", require("./routes/users"))
 app.use("/books", require("./routes/books"))
 
 app.use("/category", require("./routes/category"))
+app.use("/admin" ,require("./routes/admin"))
 
 
 

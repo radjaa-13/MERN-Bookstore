@@ -7,8 +7,8 @@ const router=express.Router()
     res.send("TEST OK");
 });*/
 
-
 const User = require("../models/UserSchema")
+
 const bcrypt= require("bcrypt")
 const jwt = require("jsonwebtoken")
 
@@ -59,6 +59,17 @@ router.post("/signin",async(req,res)=>{
     }
     let user = await User.findOne({email})
     if (user && bcrypt.compare(password, user.password)){
+        console.log("--debug info--");
+         console.log("--User found:", user.email);
+        console.log("--Raw role  value:", user.role);
+        console.log("--Role type:", typeof  user.role);
+        console.log("--Role  lenght:", user.role?.length);
+
+
+
+
+
+
     const role = (user.role || "user").trim()
 
 

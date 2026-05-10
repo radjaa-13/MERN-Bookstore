@@ -6,15 +6,56 @@ function Allbooks() {
   const [message, setMessage] = useState(""); 
 
   useEffect(() => {
-    fetch("http://localhost:5000/books/getBooks")
-      .then(res => res.json())
-      .then(data => {
-      console.log("DATA =", data);
+    const fetchBooks = async()=>{
+        
+        try {
+          const  res = await fetch("http://localhost:5000/admin/getbooks",{
+            method:"POST",
+             credentials: "include",
+            headers:{
+              'Content-Type': 'application/json'
+            }
+          })
+if(res.status===401 || res.status === 403){
+               setError('Not authorized')
+             navigate("/", { replace: true });
+             return
+          }
 
-      setBookList(data.books || data);
-    })
-      .catch(err => console.error("Error fetching books:", err));
-  }, []);
+           if (!res.ok) {
+             throw new Error(`HTTP error! status: ${res.status}`)
+                }
+
+          const data = await res.json()
+          setBookList(Array.isArray(data) ? data : [])
+            } catch (error) {
+
+         console.error("Error fetching books:", error);
+         setError(error.message)
+        navigate("/", { replace: true });
+        
+      }finally {
+            setLoading(false)
+            }
+      }
+        if(isAuthenticated && isAdmin){
+          fetchBooks()
+        }else {
+          console.log('Not authenticated or not admin')
+          navigate("/", { replace: true });
+        }
+      
+    },[navigate, isAuthenticated, isAdmin])
+
+     if (loading) {
+        return <div>Loading...</div>
+    }
+    if (error) {
+        return <div>Error: {error}</div>
+    }
+
+    
+    
 
   
   return (

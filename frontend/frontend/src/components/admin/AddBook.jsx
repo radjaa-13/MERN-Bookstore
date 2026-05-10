@@ -32,6 +32,7 @@ function AddBook() {
             try {
          const res = await fetch("http://localhost:5000/category/getCategories",{
           method:"GET",
+          credentials: "include",
             
          })
          const data = await res.json()
@@ -102,7 +103,8 @@ fd.append("discountPercent", String(form.discountPercent));
      setSubmitting(true);
     const res = await fetch("http://localhost:5000/books/createbook", {
   method: "POST",
-        
+  credentials: "include",
+
   body: fd,
     });
      const data = await res.json().catch(() => ({}))
