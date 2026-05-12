@@ -8,6 +8,7 @@ const router=express.Router()
 });*/
 
 const User = require("../models/UserSchema")
+const {cookieAuth} = require("../auth/middleware")
 
 const bcrypt= require("bcrypt")
 const jwt = require("jsonwebtoken")
@@ -96,6 +97,40 @@ router.post("/signin",async(req,res)=>{
     }
 
 })
+
+router.get("/verify" , cookieAuth , async(req,res)=>{
+    try {
+        const  user = await User.findById(req.user.id).select("-password")
+         if (!user) {
+            return res.status(401).json({ message: "User not found" });
+        }
+
+        res.status(200).json({
+            message:"Token valid",
+             user: {
+                id: user._id,
+                email: user.email,
+                name: user.name,
+                role: user.role
+            }
+        })
+    } catch (error) {
+
+      res.status(401).json({ message: "Invalid token" });
+        
+    }
+})
+
+router.post("/logout", (req,res)=>{
+    res.clearCookie("token",{
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+    })
+
+    res.status(200).json({ message: "Logged out successfully" }); 
+})
+
 
 router.get("./:id", async(req,res)=>{
     const user = await User.findById(req.params.id)

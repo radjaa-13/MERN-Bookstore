@@ -9,6 +9,7 @@ import AdminLayout from './components/admin/AdminLayout';
 import AllBooks from './components/admin/AllBooks';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import { AuthProvider } from './auth/AuthContext';
 
 
 
@@ -19,7 +20,8 @@ const location = useLocation()
 const hideHeader = /^\/admin(\/|$)/.test(location.pathname)
 
   return (
-  <div  >
+    <AuthProvider>
+ 
     
   
  {!hideHeader && <Header />}
@@ -30,16 +32,18 @@ const hideHeader = /^\/admin(\/|$)/.test(location.pathname)
  <Route path="/signup" element = {  <Signup/>}/>
 
  <Route path="/admin" element={<AdminLayout />}>
-  <Route path="add-book" element={<AddBook />} /> 
-  <Route index element="books" element={<AllBooks />} />  
+  <Route path="add-book" element={<AddBook/>} /> 
+  <Route path="books" element={<AllBooks/>} />  
 
 
 
  </Route>
  
  </Routes>
+ </AuthProvider>
 
-  </div>
+  
+  
   );
 
 }

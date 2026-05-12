@@ -1,8 +1,12 @@
 import React from 'react'
+import { useAuth } from '../auth/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 
 function Header() {
+
+         const { user, logout, loading, isAuthenticated, isAdmin } = useAuth();
+
  
     const navLinks = [
         { name: 'Home', path: '/' },

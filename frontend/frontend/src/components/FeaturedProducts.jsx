@@ -6,7 +6,7 @@ function FeaturedProducts() {
   const [message, setMessage] = useState(""); // optionnel
 
   useEffect(() => {
-    fetch("http://localhost:5000/books/getBooks")
+    fetch("http://localhost:5000/books/getbooks")
       .then(res => res.json())
       .then(data => setBookList(data))
       .catch(err => console.error("Error fetching books:", err));
