@@ -1,5 +1,7 @@
 import React from 'react'
 import { useAuth } from '../auth/AuthContext';
+import { Heart, ShoppingBasket } from 'lucide-react';
+
 import { useNavigate } from 'react-router-dom';
 
 
@@ -28,7 +30,49 @@ function Header() {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+    const handleLogout= async()=>{
+         await logout();
+          navigate('/');
+        }
+const renderUserActions=()=>{
+    if(!isAuthenticated){
+        return(
 
+             <div className="hidden md:flex items-center gap-4">
+                    <svg className={`h-6 w-6 text-white transition-all duration-500 ${isScrolled ? "invert" : ""}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                    <button onClick={()=> navigate("/login")} className={`  ml-4  ${isScrolled ? "text-white bg-[#F86D72]" : "bg-[#F86D72] text-white"}`}>
+                        Login
+                    </button>
+
+                     <button onClick={()=> navigate("/signup")} className={`  ml-4  ${isScrolled ? "text-white bg-[#F86D72]" : "bg-[#F86D72] text-white"}`}>
+                        Signup
+                    </button>
+                </div>
+        )
+    }
+
+    return(
+            <div className='hidden md:flex items-center gap-4'>
+
+        <span className={`text-sm ${isScrolled ? "text-gray-700" : "text-gray-700"}`}>
+            Welcome, {user?.name}
+          </span>
+
+          {isAdmin ? (
+            <button className='whitespace-nowrap w-44' onClick={()=> navigate("/admin")}>Manage Dashboard</button>
+             ):(
+                <>
+                <ShoppingBasket/>
+                <Heart/> 
+                </>
+          )}
+           <button  onClick={handleLogout}>Logout</button>   
+           </div>
+    )}
+    
     return (
             
             <nav className={`fixed top-0 left-0 bg-white w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 ${isScrolled ? "bg-white/80 shadow-md text-gray-700 backdrop-blur-lg py-3 md:py-4" : "py-4 md:py-6"}`}>
@@ -50,19 +94,8 @@ function Header() {
                 </div>
 
                 {/* Desktop Right */}
-                <div className="hidden md:flex items-center gap-4">
-                    <svg className={`h-6 w-6 text-white transition-all duration-500 ${isScrolled ? "invert" : ""}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <circle cx="11" cy="11" r="8" />
-                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                    </svg>
-                    <button  onClick={()=> navigate("/login")} className={`ml-4  ${isScrolled ? "text-white bg-[#F86D72]" : "bg-[#F86D72] text-white"}`}>
-                        Login
-                    </button>
-
-                     <button onClick={()=> navigate("/signup")}  className={`  ml-0 md:ml-4   ${isScrolled ? "text-white bg-[#F86D72]" : "bg-[#F86D72] text-white"}`}>
-                        Signup
-                    </button>
-                </div>
+                {renderUserActions()}
+                
 
                 {/* Mobile Menu Button */}
                 <div className="flex items-center gap-3 md:hidden">

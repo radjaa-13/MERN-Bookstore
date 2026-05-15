@@ -96,7 +96,7 @@ export const AuthProvider = ({ children }) => {
     const logout = async () => {
         try {
             const response = await fetch("http://localhost:5000/users/logout", {
-                method: "POST",
+                method: "GET",
                 credentials: 'include',
             })
         } catch (error) {
