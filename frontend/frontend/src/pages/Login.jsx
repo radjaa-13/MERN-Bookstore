@@ -36,7 +36,7 @@ function Login() {
      setErr(error.message);
    }finally{
       setLoading(false);
-   }
+   }s
     }
 
   return (
