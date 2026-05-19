@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../auth/AuthContext'
 
 function Allbooks() {
   const [bookList, setBookList] = useState([]);
   const [message, setMessage] = useState(""); 
+   const navigate = useNavigate()
+   const [loading, setLoading] = useState(true);
+   const { isAuthenticated, isAdmin, user } = useAuth()
 
   useEffect(() => {
     const fetchBooks = async()=>{
         
         try {
           const  res = await fetch("http://localhost:5000/admin/getbooks",{
-            method:"POST",
+            method:"GET",
              credentials: "include",
             headers:{
               'Content-Type': 'application/json'

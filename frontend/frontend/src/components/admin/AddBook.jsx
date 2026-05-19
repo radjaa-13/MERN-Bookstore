@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react'
+import { useAuth } from '../../auth/AuthContext';
+
 import { useNavigate } from 'react-router-dom';
+
 
 function AddBook() {
     const [categories, setCategories] = useState([]);
     const [loadingCats, setLoadingCats] = useState(true);
     const [msg, setMsg] = useState(null)
      const [submitting, setSubmitting] = useState(false);
-      
+      const { isAuthenticated, isAdmin, user, loading } = useAuth()
      const [preview, setPreview] = useState(null);
+    /* const[loading, setLoading]= useState(true);*/
     const navigate = useNavigate()
     
     const [form, setForm] = useState({
@@ -27,6 +31,11 @@ function AddBook() {
 
     useEffect(()=>{
 
+      if (loading) return
+     if (!isAuthenticated || !isAdmin) {
+          navigate("/", { replace: true })
+          return
+        }
         
         const loadCats= async()=>{
             try {
@@ -45,7 +54,7 @@ function AddBook() {
         }
 
           loadCats();
-    } ,[] )
+    } ,[loading, isAuthenticated, isAdmin, navigate] )
 
 
 
@@ -76,6 +85,11 @@ function AddBook() {
         e.preventDefault()
         setMsg(null)
 
+        if (!isAuthenticated || !isAdmin) {
+          navigate('/', { replace: true })
+          return
+        }
+
 
           
 
@@ -104,6 +118,9 @@ fd.append("discountPercent", String(form.discountPercent));
     const res = await fetch("http://localhost:5000/books/createbook", {
   method: "POST",
   credentials: "include",
+  headers:{
+              'Content-Type': 'application/json'
+            },
 
   body: fd,
     });
@@ -144,7 +161,9 @@ fd.append("discountPercent", String(form.discountPercent));
 
 };
 
- 
+ if (loading) return null
+  if (!isAuthenticated || !isAdmin) return null
+
 
   return (
    <div className="max-w-3xl mx-auto">
