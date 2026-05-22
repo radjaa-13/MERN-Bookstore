@@ -3,11 +3,14 @@ import { useAuth } from '../auth/AuthContext';
 import { Heart, ShoppingBasket } from 'lucide-react';
 
 import { useNavigate } from 'react-router-dom';
+import { useCart } from '../auth/CartContext';
+
 
 
 function Header() {
 
          const { user, logout, loading, isAuthenticated, isAdmin } = useAuth();
+       const {cart} = useCart()
 
  
     const navLinks = [
@@ -65,7 +68,15 @@ const renderUserActions=()=>{
             <button className='whitespace-nowrap w-44' onClick={()=> navigate("/admin")}>Manage Dashboard</button>
              ):(
                 <>
-                <ShoppingBasket/>
+                <div className='relative'>
+                    {cart && cart.totalItems > 0  && (
+                    <div className='absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2 py-0.5'>
+                     {cart.totalItems}
+                     </div>
+                )}
+            <a href='/cart'> <ShoppingBasket/> </a>
+            </div>
+
                 <Heart/> 
                 </>
           )}

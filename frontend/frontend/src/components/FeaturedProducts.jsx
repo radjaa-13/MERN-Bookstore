@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from '../auth/CartContext';
 
 function FeaturedProducts() {
   const [bookList, setBookList] = useState([]);
   const [message, setMessage] = useState(""); // optionnel
+    const {addToCart} = useCart()
+
 
   useEffect(() => {
     fetch("http://localhost:5000/books/getbooks")
@@ -30,6 +33,7 @@ function FeaturedProducts() {
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
 
         {featuredBooks?.slice(0, 4).map((book) => (
+          /*<a href={'bookDetails/${book?._id}'}>*/
           <div
             key={book._id}
             className='flex flex-col items-center p-4 rounded-lg border'
@@ -49,8 +53,24 @@ function FeaturedProducts() {
 
             <div className='text-sm text-gray-500'>
               Stock: {book.stock}
+
             </div>
+           
+            <button 
+            onClick={() => {addToCart(book._id);
+               setBookList(prev => prev.map(b =>b._id=== book._id ?{ ...b, stock: b.stock - 1 } : b))
+                setMessage("Added To Cart Successfully")
+              
+              }}
+
+            
+              disabled={book.stock === 0}
+              className=" mt-5 whitespace-nowrap w-30 disabled:bg-gray-400"
+            >
+              {book.stock === 0 ? "Out of stock" : "Add to Cart"}
+            </button>
           </div>
+        /* </a>*/
         ))}
 
       </div>

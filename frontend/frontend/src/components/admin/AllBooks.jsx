@@ -76,6 +76,7 @@ if(res.status===401 || res.status === 403){
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
 
         {bookList?.map((book) => (
+          <a href={`/admin/update-book/${book?._id}`}>
           <div
             key={book._id}
             className='flex flex-col items-center p-4 rounded-lg border'
@@ -95,11 +96,14 @@ if(res.status===401 || res.status === 403){
 
             <div className='text-sm text-gray-500'>
               Stock: {book.stock}
-            </div>
+            </div> 
+
           </div>
+          </a>
         ))}
 
       </div>
+
     </div>
   );
 }
